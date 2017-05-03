@@ -25,6 +25,7 @@
     :root {
         background: #e19d6f;
         background: url('./assets/texture.jpg') 50% 25%;
+        background-size: cover;
     }
 
     #app {
@@ -34,8 +35,7 @@
         text-align: center;
         color: #2c3e50;
         margin: 10px auto;
-        max-width: 1200px;
-        height: 500px;
+        max-width: 1400px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
