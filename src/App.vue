@@ -1,22 +1,37 @@
 <template lang="pug">
     #app
         vue-head
-        vue-list
+        button(@click="aboutWelder") О сварочниках
+        button(@click="aboutUs") Способы обращения
+        transition(appear)
+            template(v-if="currentView === 1")
+                vue-list
+        transition(appear)
+            template(v-if="currentView === 2")
+                vue-head
 </template>
 
 <script>
     import VueHead from './components/Head.vue';
-    import VueList from './components/ListOfTrans.vue';
     export default {
         name: 'app',
         data () {
             return {
-                msg: 'Всё сварится - мы поможем!'
+                msg: 'Всё сварится - мы поможем!',
+                currentView: 0
             }
         },
         components: {
             VueHead,
-            VueList
+            VueList: () => import('./components/ListOfTrans.vue')
+        },
+        methods: {
+            aboutWelder: function() {
+                this.currentView = 1;
+            },
+            aboutUs: function() {
+                this.currentView = 2;
+            }
         }
     }
 </script>
@@ -26,6 +41,7 @@
         background: #e19d6f;
         background: url('./assets/texture.jpg') 50% 25%;
         background-size: cover;
+        background-attachment: fixed;
     }
 
     #app {
@@ -59,5 +75,13 @@
 
     a {
         color: #42b983;
+    }
+    .v-enter-active {
+        transition: all .3s ease;
+    }
+    .v-enter
+        /* .slide-fade-leave-active для <2.1.8 */ {
+        transform: rotateY(90deg);
+        opacity: 0;
     }
 </style>

@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -68,6 +68,13 @@ module.exports = {
                       ]
                   })
               ]
+          }
+      }),
+      new webpack.optimize.CommonsChunkPlugin({
+          name: 'vue-vendor', // Specify the common bundle's name.
+          minChunks: function (module) {
+              // this assumes your vendor imports exist in the node_modules directory
+              return module.context && module.context.indexOf('node_modules') !== -1;
           }
       })
   ]
