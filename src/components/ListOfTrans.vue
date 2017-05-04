@@ -56,7 +56,7 @@
                 border-radius: 3px;
                 width: 300px; height: 300px;
                 perspective: 800px;
-                transition: transform 1s ease-in-out;
+                transition: transform 0.7s ease-in-out;
                 position: relative;
                 transform-origin: 50%;
                 transform-style: preserve-3d;

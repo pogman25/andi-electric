@@ -23,7 +23,7 @@ export default {
 
 header {
   width: 90%;
-  height: 400px;
+  height: 550px;
   display: flex;
   justify-content: space-around;
   align-items: center;

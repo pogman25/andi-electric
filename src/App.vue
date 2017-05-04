@@ -1,8 +1,11 @@
 <template lang="pug">
     #app
-        vue-head
-        button(@click="aboutWelder") О сварочниках
-        button(@click="aboutUs") Способы обращения
+        div(:class="title ? 'mainPage' : 'landPage'" )
+            vue-head
+            #buttons
+                button(@click="aboutWelder") О сварочниках
+                button(@click="aboutUs") Способы обращения
+                button(@click="reset") Reset
         transition(appear)
             template(v-if="currentView === 1")
                 vue-list
@@ -18,7 +21,8 @@
         data () {
             return {
                 msg: 'Всё сварится - мы поможем!',
-                currentView: 0
+                currentView: 0,
+                title: false
             }
         },
         components: {
@@ -28,9 +32,15 @@
         methods: {
             aboutWelder: function() {
                 this.currentView = 1;
+                this.title = true;
             },
             aboutUs: function() {
                 this.currentView = 2;
+                this.title = true;
+            },
+            reset: function() {
+                this.currentView = 0;
+                this.title = false;
             }
         }
     }
@@ -49,14 +59,29 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
-        color: #2c3e50;
+        max-width: 1400px;
         margin: 10px auto;
+        color: #2c3e50;
+    }
+
+    .landPage, .mainPage {
         max-width: 1400px;
         display: flex;
+        justify-content: center;
         flex-direction: column;
-        justify-content: space-around;
         align-items: center;
         align-content: center;
+        transition: all 1s;
+        margin: 10px auto;
+    }
+
+    .landPage {
+        height: 96vh;
+        min-height: 400px;
+    }
+
+    .mainPage {
+        height: 400px;
     }
 
     h1, h2 {
