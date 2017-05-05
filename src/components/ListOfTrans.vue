@@ -89,10 +89,10 @@
             }
         }
 
-        .list-enter-active, .list-leave-active {
-            transition: all 1s;
+        .list-enter-active {
+            transition: all 1s cubic-bezier(.5, -1, .5, 2);
         }
-        .list-enter, .list-leave-to /* .list-leave-active для <2.1.8 */ {
+        .list-enter {
             opacity: 0;
             transform: rotateY(90deg);
         }

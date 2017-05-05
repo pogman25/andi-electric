@@ -4,7 +4,7 @@
         img(src="../assets/logo.png" alt="andi-electric")
         h2 {{ msg }}
       span
-        p Если с вашим сварочным аппаратом что-то случилось
+        h1 Ремонт сварочных аппаратов
         p Позвоните нам:<br/>+7-950-65-46-565<br/>+7-987-65-43-221<br/><br/>или напишите:<br/>andi-electric@mail.ru
 </template>
 
@@ -45,10 +45,16 @@ header {
     background-size: cover;
     z-index: -1;
   }
+
+  h1 {
+      transition: all 1s;
+  }
+
   .img {
     background: rgba(0, 60, 80, 0.9);
     border-radius: 3px;
     padding: 0 10px;
+    width: 33%;
 
     img {
       max-height: 150px;
@@ -58,7 +64,7 @@ header {
 
   span {
     min-width: 200px;
-    width: 25%;
+    width: 33%;
     background: rgba(0, 60, 80, 0.9);
     border-radius: 3px;
     padding: 0 10px;
@@ -66,9 +72,36 @@ header {
 
 }
 
-@media screen and (max-width: 724px){
-  header img{
-      max-width: 33%;
+.mainPage header {
+    margin: 10px auto;
+    height: 250px;
+    transition: height 1s;
+}
+
+@media screen and (max-width: 950px){
+  header {
+      .img {
+          width: calc(50% - 50px);
+      }
+      img{
+          width: 75%;
+      }
+      span {
+          width: calc(50% - 50px);
+      }
   }
+}
+
+@media screen and (max-width: 460px) {
+    header {
+        flex-direction: column;
+
+        .img, span {
+            width: 90%;
+        }
+        img{
+            width: 75%;
+        }
+    }
 }
 </style>

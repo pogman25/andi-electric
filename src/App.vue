@@ -2,10 +2,15 @@
     #app
         div(:class="title ? 'mainPage' : 'landPage'" )
             vue-head
-            #buttons
-                button(@click="aboutWelder") О сварочниках
-                button(@click="aboutUs") Способы обращения
-                button(@click="reset") Reset
+            transition-group(tag="div" name="btn" class="vue-btn" appear)
+                div(@click="reset", :key="1", class="btn1")
+                    p Главная
+                div(@click="aboutWelder", :key="2", class="btn2")
+                    p О сварочниках
+                div(@click="aboutUs", :key="3", class="btn3")
+                    p Способы обращения
+                div(@click="aboutUs", :key="4", class="btn4")
+                    p О нас
         transition(appear)
             template(v-if="currentView === 1")
                 vue-list
@@ -81,7 +86,12 @@
     }
 
     .mainPage {
-        height: 400px;
+        height: 330px;
+
+        h1, h2 {
+            font-size: 1.3em;
+            transition: all 1s;
+        }
     }
 
     h1, h2 {
@@ -97,16 +107,55 @@
         display: inline-block;
         margin: 0 10px;
     }
-
-    a {
-        color: #42b983;
-    }
+    
     .v-enter-active {
         transition: all .3s ease;
     }
-    .v-enter
-        /* .slide-fade-leave-active для <2.1.8 */ {
+    .v-enter {
         transform: rotateY(90deg);
         opacity: 0;
+    }
+    .vue-btn {
+        display: flex;
+        justify-content: space-around;
+        font-size: 1.3em;
+        background: transparent;
+        mix-blend-mode: difference;
+        width: 66%;
+        cursor: pointer;
+        perspective: 800px;
+
+        p {
+            margin: 0;
+            padding: 0 15px;
+            color: #fff;
+        }
+    }
+    @media screen and (max-width: 950px) {
+        .vue-btn {
+            justify-content: space-around;
+            width: 90%;
+        }
+    }
+    .btn-enter-active {
+        transition: all 1s cubic-bezier(.175, 2, .5, .1);
+    }
+    .btn-enter {
+        opacity: 0;
+        transform: rotateX(-90deg);
+    }
+    @for $i from 1 to 5 {
+        .btn#{$i} {
+            @extend %btn-num;
+            transition-delay: $i*400+ms;
+        }
+    }
+
+    %btn-num {
+        background: url('./assets/texture-btn.jpg') no-repeat center center;
+        border: 1px solid #ccc;
+        border-radius: 20px/25px;
+        background-size: cover;
+        transform-origin: 100% 0;
     }
 </style>
