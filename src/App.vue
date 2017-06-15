@@ -1,22 +1,18 @@
 <template lang="pug">
-    #app
+    #main
         div(:class="title ? 'mainPage' : 'landPage'" )
             vue-head
             transition-group(tag="div" name="btn" class="vue-btn" appear)
-                div(@click="reset", :key="1", class="btn1")
+                router-link(class="btn1", to="/", :key="1" )
                     p Главная
-                div(@click="aboutWelder", :key="2", class="btn2")
+                router-link(to="list", :key="2", class="btn2")
                     p О сварочниках
-                div(@click="aboutUs", :key="3", class="btn3")
+                router-link(to="send", :key="3", class="btn3")
                     p Способы обращения
-                div(@click="aboutUs", :key="4", class="btn4")
+                router-link(to="about", :key="4", class="btn4")
                     p О нас
         transition(appear)
-            template(v-if="currentView === 1")
-                vue-list
-        transition(appear)
-            template(v-if="currentView === 2")
-                vue-head
+            router-view
 </template>
 
 <script>
@@ -26,27 +22,16 @@
         data () {
             return {
                 msg: 'Всё сварится - мы поможем!',
-                currentView: 0,
                 title: false
             }
         },
-        components: {
-            VueHead,
-            VueList: () => import('./components/ListOfTrans.vue')
+        watch: {
+          '$route' (to) {
+              this.title = !!to.name;
+          }
         },
-        methods: {
-            aboutWelder: function() {
-                this.currentView = 1;
-                this.title = true;
-            },
-            aboutUs: function() {
-                this.currentView = 2;
-                this.title = true;
-            },
-            reset: function() {
-                this.currentView = 0;
-                this.title = false;
-            }
+        components: {
+            VueHead
         }
     }
 </script>
@@ -59,7 +44,7 @@
         background-attachment: fixed;
     }
 
-    #app {
+    #main {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -117,6 +102,7 @@
     }
     .vue-btn {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-around;
         font-size: 1.3em;
         background: transparent;

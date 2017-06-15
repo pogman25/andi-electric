@@ -25,6 +25,7 @@ header {
   width: 90%;
   height: 550px;
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
   align-items: center;
   align-content: center;
@@ -94,8 +95,6 @@ header {
 
 @media screen and (max-width: 460px) {
     header {
-        flex-direction: column;
-
         .img, span {
             width: 90%;
         }
