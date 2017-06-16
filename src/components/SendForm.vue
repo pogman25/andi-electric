@@ -3,29 +3,29 @@
         p(class="success", v-if="sending") Форма отправлена, в ближайшее время вам позвонят
         .step1.steps(v-if="!sending", :class="{passed: validateName}")
             input(id='sendName' v-model='name' placeholder='введите Имя', @keyup.enter="sendName")
-            span(v-if="getError && !validateName") Введите своё имя
-            .next(v-if="!validateName", @click="sendName")
+            span(v-show="getError && !validateName") Введите своё имя
+            .next(@click="sendName")
                 svg( height="40" width="200")
                     rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
                     text(class="svgText" x="50" y="30" stroke="#2c3e50" fill="none") Шаг 1
                     text(class="svgTextNext" x="50" y="30" stroke="#2c3e50" fill="none") Дальше
-        .step2.steps(v-if="validateName", :class="{passed: validateEmail}")
+        .step2.steps(v-show="validateName", :class="{passed: validateEmail}")
             input(id='sendEmail' v-model='email' placeholder='введите e-mail', @keyup.enter="sendEmail")
-            span(v-if="getError && !validateEmail") Введите корректный email
-            .next(v-if="!validateEmail", @click="sendEmail")
+            span(v-show="getError && !validateEmail") Введите корректный email
+            .next(@click="sendEmail")
                 svg( height="40" width="200")
                     rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
                     text(class="svgText" x="50" y="30" stroke="#2c3e50" fill="none") Шаг 2
                     text(class="svgTextNext" x="50" y="30" stroke="#2c3e50" fill="none") Дальше
-        .step3.steps(v-if="validateEmail", :class="{passed: validatePhone}")
+        .step3.steps(v-show="validateEmail", :class="{passed: validatePhone}")
             input(id='sendPhone' v-model='phone', placeholder='введите телефон', @keyup.enter="sendPhone")
             span(v-if="getError && !validatePhone") Введите номер телефона
-            .next(v-if="!validatePhone", @click="sendPhone")
+            .next(@click="sendPhone")
                 svg( height="40" width="200")
                     rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
                     text(class="svgText" x="50" y="30" stroke="#2c3e50" fill="none") Шаг 3
                     text(class="svgTextNext" x="50" y="30" stroke="#2c3e50" fill="none") Дальше
-        .step4.steps(v-if="validatePhone")
+        .step4.steps(v-show="validatePhone")
             textarea(id='sendText' v-model='text' placeholder='введите текст собщения' rows="10" cols="20", @keyup.enter="sendForm")
             .submit(@click="sendForm")
                 svg( height="40" width="200")
@@ -57,11 +57,17 @@
             sendName: function () {
                 this.validateName = !!this.name.trim();
                 this.getError = !this.name.trim();
+                setTimeout(() => {
+                    document.getElementById('sendEmail').focus();
+                }, 700);
             },
             sendEmail: function () {
                 const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 this.validateEmail = re.test(this.email);
                 this.getError = !re.test(this.email);
+                setTimeout(() => {
+                    document.getElementById('sendPhone').focus();
+                }, 700);
             },
             sendPhone: function () {
                 const re = /\d{10}/;
@@ -69,8 +75,12 @@
                 this.validatePhone = re.test(phone);
                 if (re.test(phone)) this.phone = phone;
                 this.getError = !re.test(phone);
+                setTimeout(() => {
+                    document.getElementById('sendText').focus();
+                }, 700);
             },
             sendForm: function () {
+                document.getElementById('sendText').blur();
                 this.name = '';
                 this.text = '';
                 this.email = '';
@@ -82,6 +92,7 @@
                 this.sending = true;
                 setTimeout(() => {
                     this.sending = false;
+                    document.getElementById('sendName').focus();
                 }, 5000)
             }
         }
@@ -118,7 +129,7 @@
 
         .passed {
             animation-name: disappear;
-            animation-duration: 0.7s;
+            animation-duration: 1s;
             animation-fill-mode: forwards;
         }
 
@@ -135,8 +146,6 @@
 
             &:focus {
                 background-color: #fff;
-                opacity: 1;
-                transform: scale(1);
             }
         }
     }
@@ -187,7 +196,7 @@
         }
         100% {
             opacity: 0;
-            transform: scale(0) translateY(-50px);
+            transform: scale(0.2) translateX(1500px) translateY(-250px);
         }
     }
 </style>
