@@ -11,7 +11,7 @@
                     p Способы обращения
                 router-link(to="about", :key="4", class="btn4")
                     p О нас
-        transition(appear)
+        transition(name="fade")
             router-view
 </template>
 
@@ -44,6 +44,14 @@
         background-attachment: fixed;
     }
 
+    body {
+        overflow-x: hidden;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
     #main {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -52,6 +60,7 @@
         max-width: 1400px;
         margin: 10px auto;
         color: #2c3e50;
+        position: relative;
     }
 
     .landPage, .mainPage {
@@ -93,12 +102,20 @@
         margin: 0 10px;
     }
     
-    .v-enter-active {
-        transition: all .3s ease;
+    .fade-enter-active, .fade-leave-active {
+        transition: all 1s ease;
     }
-    .v-enter {
+    .fade-enter{
         transform: rotateY(90deg);
         opacity: 0;
+    }
+    .fade-enter-to, .fade-leave{
+        opacity: 1;
+    }
+    .fade-leave-to {
+        position: absolute;
+        opacity: 0;
+        transform: translateX(100px) scale(0.75);
     }
     .vue-btn {
         display: flex;
@@ -144,4 +161,5 @@
         background-size: cover;
         transform-origin: 100% 0;
     }
+
 </style>
