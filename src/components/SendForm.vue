@@ -1,9 +1,11 @@
 <template lang="pug">
     .inputForm
-        p(class="success", v-if="sending") Форма отправлена, в ближайшее время вам позвонят
+        transition(name="success-send")
+            p(class="success", v-if="sending") Форма отправлена, в ближайшее время с вами свяжется наш специалист
         .step1.steps(v-if="!sending", :class="{passed: validateName}")
             input(id='sendName' v-model='name' placeholder='введите Имя', @keyup.enter="sendName")
-            span(v-show="getError && !validateName") Введите своё имя
+            transition(name="success-send")
+                span(v-if="getError && !validateName") Введите своё имя
             .next(@click="sendName")
                 svg( height="40" width="200")
                     rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
@@ -11,7 +13,8 @@
                     text(class="svgTextNext" x="50" y="30" stroke="#2c3e50" fill="none") Дальше
         .step2.steps(v-show="validateName", :class="{passed: validateEmail}")
             input(id='sendEmail' v-model='email' placeholder='введите e-mail', @keyup.enter="sendEmail")
-            span(v-show="getError && !validateEmail") Введите корректный email
+            transition(name="success-send")
+                span(v-if="getError && !validateEmail") Введите корректный email
             .next(@click="sendEmail")
                 svg( height="40" width="200")
                     rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
@@ -19,7 +22,8 @@
                     text(class="svgTextNext" x="50" y="30" stroke="#2c3e50" fill="none") Дальше
         .step3.steps(v-show="validateEmail", :class="{passed: validatePhone}")
             input(id='sendPhone' v-model='phone', placeholder='введите телефон', @keyup.enter="sendPhone")
-            span(v-if="getError && !validatePhone") Введите номер телефона
+            transition(name="success-send")
+                span(v-if="getError && !validatePhone") Введите номер телефона
             .next(@click="sendPhone")
                 svg( height="40" width="200")
                     rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
@@ -182,13 +186,19 @@
             }
             .svgTextNext {
                 stroke-dasharray: 50 0;
-                fill: transparentize(#191a44, 0.6);
             }
             #shape {
                 stroke-dasharray: 25 0;
                 stroke-dashoffset: 0;
             }
         }
+    }
+
+    .success-send-enter-active, .success-send-leave-active {
+        transition: opacity .75s
+    }
+    .success-send-enter, .success-send-leave-to {
+        opacity: 0
     }
     @keyframes disappear {
         0% {
