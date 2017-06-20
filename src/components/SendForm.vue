@@ -77,7 +77,7 @@
                 }, 700);
             },
             sendPhone: function () {
-                const re = /\d{10}/;
+                const re = /\d/g;
                 let phone = this.phone.replace(/\D/g, '');
                 this.validatePhone = re.test(phone);
                 if (re.test(phone)) this.phone = phone;
