@@ -1,6 +1,6 @@
 <template lang="pug">
     .aboutUs
-        h2 About us
+        h2 {{ msg }}
 </template>
 
 <script>
@@ -8,7 +8,7 @@
         name: 'vue-about-us',
         data () {
             return {
-                msg: 'Всё сварится - мы поможем!'
+                msg: 'Здесь будет информация о нас'
             }
         }
     }

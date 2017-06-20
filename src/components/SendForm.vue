@@ -8,7 +8,7 @@
                 span(v-if="getError && !validateName") Введите своё имя
             .next(@click="sendName")
                 svg( height="40" width="200")
-                    rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
+                    rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none")
                     text(class="svgText" x="50" y="30" stroke="#2c3e50" fill="none") Шаг 1
                     text(class="svgTextNext" x="50" y="30" stroke="#2c3e50" fill="none") Дальше
         .step2.steps(v-show="validateName", :class="{passed: validateEmail}")
@@ -17,7 +17,7 @@
                 span(v-if="getError && !validateEmail") Введите корректный email
             .next(@click="sendEmail")
                 svg( height="40" width="200")
-                    rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
+                    rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none")
                     text(class="svgText" x="50" y="30" stroke="#2c3e50" fill="none") Шаг 2
                     text(class="svgTextNext" x="50" y="30" stroke="#2c3e50" fill="none") Дальше
         .step3.steps(v-show="validateEmail", :class="{passed: validatePhone}")
@@ -26,19 +26,22 @@
                 span(v-if="getError && !validatePhone") Введите номер телефона
             .next(@click="sendPhone")
                 svg( height="40" width="200")
-                    rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
+                    rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none")
                     text(class="svgText" x="50" y="30" stroke="#2c3e50" fill="none") Шаг 3
                     text(class="svgTextNext" x="50" y="30" stroke="#2c3e50" fill="none") Дальше
         .step4.steps(v-show="validatePhone")
             textarea(id='sendText' v-model='text' placeholder='введите текст собщения' rows="10" cols="20", @keyup.enter="sendForm")
             .submit(@click="sendForm")
                 svg( height="40" width="200")
-                    rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none" rx="15" ry="15")
+                    rect(id="shape" height="40" width="200" stroke="#2c3e50" fill="none")
                     text(class="svgText" x="50" y="30" stroke="#2c3e50" fill="none") Шаг 4
                     text(class="svgTextNext" x="30" y="30" stroke="#2c3e50" fill="none") Отправить
 </template>
 
 <script>
+    import uuidV1 from 'uuid';
+    import { ADD_MAIL } from '../constants';
+
     export default {
         name: 'vue-send-from',
         data () {
@@ -85,6 +88,14 @@
             },
             sendForm: function () {
                 document.getElementById('sendText').blur();
+                const payload = {
+                    id: uuidV1(),
+                    name: this.name,
+                    email: this.email,
+                    phone: this.phone,
+                    text: this.text
+                };
+                this.$store.commit(ADD_MAIL, payload);
                 this.name = '';
                 this.text = '';
                 this.email = '';
@@ -96,7 +107,6 @@
                 this.sending = true;
                 setTimeout(() => {
                     this.sending = false;
-                    document.getElementById('sendName').focus();
                 }, 5000)
             }
         }
@@ -156,7 +166,7 @@
     #shape {
         stroke-width: 4px;
         stroke-dasharray: 150 350;
-        stroke-dashoffset: -240;
+        stroke-dashoffset: -274;
         transition: 1s all ease;
     }
     .svgText, .svgTextNext {

@@ -14,5 +14,10 @@ export const routes = [
         path: '/send',
         name: 'send',
         component: () => import('./components/SendLetter.vue')
+    },
+    {
+        path: '/admin',
+        name: 'admin',
+        component: () => import('./components/Admin.vue')
     }
 ];

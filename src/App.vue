@@ -1,15 +1,17 @@
 <template lang="pug">
     #main
+        .goAdmin
+            router-link(to="admin", :key="1" ) admin
         div(:class="title ? 'mainPage' : 'landPage'" )
             vue-head
             transition-group(tag="div" name="btn" class="vue-btn" appear)
                 router-link(class="btn1", to="/", :key="1" )
                     p Главная
-                router-link(to="list", :key="2", class="btn2")
+                router-link(class="btn3", to="list", :key="2")
                     p О сварочниках
-                router-link(to="send", :key="3", class="btn3")
+                router-link(class="btn2", to="send", :key="3")
                     p Способы обращения
-                router-link(to="about", :key="4", class="btn4")
+                router-link(class="btn4", to="about", :key="4")
                     p О нас
         transition(name="fade")
             router-view
@@ -101,7 +103,25 @@
         display: inline-block;
         margin: 0 10px;
     }
-    
+
+    .goAdmin {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        a, a:visited {
+            color: #2c3e50;
+            transition: all 0.5s;
+            text-transform: uppercase;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            font-size: 1.6em;
+            background-color: transparentize(#fff, 0.6);
+        }
+    }
+
     .fade-enter-active, .fade-leave-active {
         transition: all 1s ease;
     }
@@ -114,6 +134,9 @@
     }
     .fade-leave-to {
         position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
         opacity: 0;
         transform: translateX(100px) scale(0.75);
     }
